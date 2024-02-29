@@ -1,37 +1,55 @@
-def sudoku(arr):
-    for i in range(9):
-        w = [0] * 10   #가로 검사
-        h = [0] * 10   #세로 검사
-
-        for j in range(9):
-            w[arr[i][j]] += 1  # 가로 검사
-            if w[arr[i][j]] == 2:
-                return 0
-
-            h[arr[j][i]] += 1    #세로 검사
-            if h[arr[j][i]] == 2:
-                return 0
-
-    for i in range(0, 9, 3):       # 작은 스도쿠 검사
-        for j in range(0, 9, 3):
-            mini = [0] * 10
-            for k in range(3):        # 작은 스도쿠의 크기만큼 반복
-                for l in range(3):
-                    # 가로검사
-                    mini[arr[i+k][j+l]] += 1
-                    if mini[arr[i+k][j+l]] == 2:
-                        return 0
-
-    return 1
-
-
-
-
 T = int(input())
 
-for test_case in range(1, T+ 1):
-    tc = [list(map(int, input().split())) for _ in range(9)]
+for test_case in range(1, T+1):
+    puzzle = [list(map(int, input().split())) for _ in range(9)]   # 9x9 퍼즐
+    result = 0  # 결과를 저장할 변수
 
-    result = sudoku(tc)
+    def puzzle_check():
+        global result
+        # 가로 한줄에 1-9까지의 숫자가 겹치지 않는지 확인
+        for i in range(9):
+            check = []  # 겹치는 숫자가 있는지 확인하기 위해 사용하는 리스트
+            for j in range(9):
+                if puzzle[i][j] not in check:
+                    check.append(puzzle[i][j])
+                else:   # 겹치는 숫자가 있을 경우
+                    result = 0
+                    return result
 
-    print(f'#{test_case} {result}')
+        # 세로 한줄에 1-9 까지의 숫자가 겹치지 않는지 확인
+        for i in range(9):
+            check = []  # 겹치는 숫자가 있는지 확인하기 위해 사용하는 리스트
+            for j in range(9):
+                if puzzle[j][i] not in check:
+                    check.append(puzzle[j][i])
+                else:
+                    result = 0
+                    return result
+
+
+        # 작은 스도쿠 안에서 1-9까지의 숫자가 겹치지 않는지 확인
+        for i in range(0, 6, 3):
+            for j in range(0, 6, 3):
+                check = []  # 겹치는 숫자가 있는지 확인하기 위해 사용하는 리스트
+                for k in range(3):
+                    for l in range(3):
+                        if puzzle[i+k][j+l] not in check:
+                            check.append(puzzle[i+k][j+l])
+                        else:
+                            result = 0
+                            return result
+
+        result = 1
+        return result
+
+
+    sol = puzzle_check()
+    # 출력: 겹치는 숫자가 없을 경우 1, 겹칠 경우 0 출력
+    print(f'#{test_case} {sol}')
+
+
+
+
+
+
+
