@@ -12,7 +12,7 @@ for i in range(1, N):
             result = cnt
         cnt = 1
 
-if result < cnt:
+if result < cnt:   #끝까지 커질 수도 있으므로 따로 밖에서 조건문 실행
     result = cnt
     
 cnt = 1
