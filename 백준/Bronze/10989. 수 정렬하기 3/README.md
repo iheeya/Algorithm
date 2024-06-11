@@ -26,3 +26,24 @@
 
  <p>첫째 줄부터 N개의 줄에 오름차순으로 정렬한 결과를 한 줄에 하나씩 출력한다.</p>
 
+ ### 풀이
+
+첫번째 풀이
+```python
+import sys
+
+N = int(sys.stdin.readline())
+N_lst = []
+
+for _ in range(N):
+    x = int(sys.stdin.readline())
+    N_lst.append(x)
+
+N_lst.sort()
+
+for n in N_lst:
+    print(n)
+```
+이렇게 풀었더니 메모리 초과라는 결과가 나왔다. 메모리의 크기를 줄일 수 있는 방법을 생각해보다
+계수정렬을 사용해 해결했다.
+
