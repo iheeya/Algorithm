@@ -28,6 +28,7 @@
 
 
 ### 풀이과정
+첫 번째 풀이
 ```python
 N = int(input())   # 숫자의 개수
 A = list(map(int, input().split()))  # 숫자 리스트
