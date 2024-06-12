@@ -9,6 +9,7 @@ M = int(input().strip())  # 명령어의 개수
 
 for _ in range(M):
     cmd = input().split()
+    #left, right 사이가 커서
 
     if cmd[0] == 'L' and left:
         right.appendleft(left.pop())
