@@ -57,3 +57,39 @@
 ### 자료구조
 -연결 리스트
 
+### 풀이
+처음 코드
+```python
+import sys
+input = sys.stdin.readline
+
+word = list(input())
+M = int(input())  # 명령어의 개수
+cursor = len(word)  # 커서는 항상 단어 리스트 내의 인덱스로 처리
+
+for tc in range(M):
+    cmd = list(input().split())   # 명령어
+
+    if cmd[0] == 'L':
+        if cursor != 0:
+            cursor -= 1
+    
+    elif cmd[0] == 'D':
+        if cursor != len(word):
+            cursor += 1
+    
+    elif cmd[0] == 'B':
+        if cursor != 0:
+            del word[cursor - 1]
+            cursor -= 1
+    
+    elif cmd[0] == 'P':
+        word.insert(cursor, cmd[1])
+        cursor += 1
+
+
+print(''.join(word))
+```
+처음엔 커서의 위치를 설정하고 명령어 마다 커서를 옮겨다니도록 코드를 짰다. 이렇게 코드를 제출했더니 시간초과가 떴다. 리스트 중간에 삽입, 삭제하는 작업이 시간이 많이 걸린것 같았다.
+시간 초과 문제를 해결해기 위해 리스트를 두개로 만들고 리스트와 리스트 사이를 커서라고 상정하고 문제를 다시 풀었다.
+
