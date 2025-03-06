@@ -1,9 +1,9 @@
 N = int(input())
+nums = list(input())
 
-numbers = list(map(int, input()))
-cnt = 0
+result = 0
 
-for num in numbers:
-    cnt += num
+for i in nums:
+    result += int(i)
 
-print(cnt)
+print(result)
