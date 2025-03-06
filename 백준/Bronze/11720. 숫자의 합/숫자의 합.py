@@ -1,9 +1,4 @@
 N = int(input())
-nums = list(input())
+nums = list(map(int, input()))
 
-result = 0
-
-for i in nums:
-    result += int(i)
-
-print(result)
+print(sum(nums))
