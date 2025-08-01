@@ -1,11 +1,10 @@
 N = int(input())
-N_lst = []
+A = [0] * N
 
-for _ in range(N):
-    x = int(input())
-    N_lst.append(x)
+for i in range(N):
+    A[i] = int(input())
 
-N_lst.sort()
+A.sort()
 
-for n in N_lst:
-    print(n)
+for a in A:
+    print(a)
