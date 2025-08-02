@@ -1,30 +1,33 @@
 import sys
+input = sys.stdin.readline
 
-N = int(sys.stdin.readline())   # 숫자의 개수
-A = list(map(int, sys.stdin.readline().split()))  # 숫자 리스트
-A.sort()
+N = int(input())
+A = list(map(int, input().split()))
+M = int(input())
+B = list(map(int, input().split()))
 
-M = int(input())  
-X = list(map(int, sys.stdin.readline().split()))   # A와 일치하는 숫자가 있는지 확인
+A.sort()   # 이진 탐색은 정렬된 배열 필요
 
-# 이진 탐색 사용
-for x in X:
+def Binary(b):
     start = 0
-    end = N-1
-    result = 0   # 결과 값
+    end = N -1
+    find = False
 
     while start <= end:
-        middle = (start + end) // 2
-        if A[middle] == x:
-            result = 1
+        mid = int((start + end)/2)
+
+        if A[mid] > b:
+            end = mid - 1
+        elif A[mid] < b:
+            start = mid + 1
+        else:
+            find = True
             break
-
-        elif A[middle] < x:   # 중앙값이 더 작다면
-            start = middle + 1  # 구간 재설정
-        
-        elif A[middle] > x: # 중앙값이 더 크다면
-            end = middle - 1  
-
-    print(result)  
     
+    if find == True:
+        print(1)
+    else:
+        print(0)
 
+for b in B:
+    Binary(b)
