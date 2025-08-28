@@ -1,47 +1,49 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
+from collections import deque
 
-N, V, I = map(int, input().split())    # 노드, 간선, 시작 노드
-visited_dfs = [False] * (N+1)
-visited_bfs = [False] * (N+1)
-A = [[] for _ in range(N+1)]   # 인접 리스트
-
-# 인접 리스트 만들기
-for i in range(V):
-    u, v = map(int, input().split())
-    A[u].append(v)
-    A[v].append(u)
-
-
-# 인접 리스트 오름차순으로 정렬
-for i in range(N+1):
-    A[i].sort()
-
-def DFS(v):
-    visited_dfs[v] = True
-    print(v, end = ' ')
-    for i in A[v]:
+def DFS(V):
+    print(V, end = " ")
+    visited_dfs[V] = True
+    for i in A[V]:
         if not visited_dfs[i]:
             DFS(i)
 
-def BFS(v):
-    deq = deque()
+def BFS(V):
+    q = deque()
+    q.append(V)
 
-    deq.append(v)
-
-    while deq:
-        node_now = deq.popleft()
-        visited_bfs[node_now] = True
-
-        for i in A[node_now]:
-            if not visited_bfs[i]:
-                deq.append(i)
+    while q:
+        n = q.popleft()
+        print(n, end = " ")
+        visited_bfs[n] = True
+        for i in A[n]:
+            if not visited_bfs[i] :
+                q.append(i)
                 visited_bfs[i] = True
-        
-        print(node_now, end = ' ')
 
 
-DFS(I)
-print()   # 줄 바꿈을 위한 코드
-BFS(I)
+
+N, M, V = map(int, input().split())    # 정점 개수, 간선 개수, 탐색을 시작할 정점 번호
+A = [[] for _ in range(N+1)] 
+
+for _ in range(M):
+    i, j = map(int, input().split())
+    A[i].append(j)
+    A[j].append(i)
+
+# 정점이 여러개 연결되어 있는 경우 작은 수 먼저 방문하도록
+for i in range(N+1):
+    A[i].sort()
+
+# 인덱스 번호 == 노드 번호
+visited_dfs = [False] * (N+1)
+visited_bfs = [False] * (N+1)
+
+
+DFS(V)
+print()
+BFS(V)
+
+
+
