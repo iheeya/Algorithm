@@ -1,46 +1,32 @@
-from collections import deque
+import sys
+input = sys.stdin.readline
 
-def bfs(node_num):
-    global hq, visited
-    
-    while hq:
-        node = hq.popleft()
+def dfs(n):
+    global cnt
+    visited[n] = True   # 방문 처리
+    cnt += 1
 
-        if visited[node] == True:
-            continue
-        else:
-            visited[node] = True
-            node_num += 1
+    for i in A[n]:
+        if not visited[i]:
+            dfs(i)
 
-        for next in graph[node]:        
-            if not visited[next]:
-                hq.append(next)
-        
-        
+computer = int(input())   # 컴퓨터 개수 
+connect = int(input())    # 컴퓨터 쌍 개수
 
-    return node_num
-        
+A = [[] for _ in range(computer + 1)]   # 컴퓨터 쌍 저장할 인접 리스트
+visited = [False] * (computer + 1)  # 방문처리를 위한 리스트
+cnt = -1  # 감염된 컴퓨터 수 카운트
 
-
-
-T = int(input())   # 컴퓨터의 수
-N = int(input())   # 연결된 컴퓨터의 쌍 수
-
-graph = [[] for _ in range(T+1)]
-visited = [False] * (T+1)   # 방문 체크하기 위한 리스트
-
-for _ in range(N):
+# 컴퓨터 순서쌍 입력
+for _ in range(connect):
     a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
+    A[a].append(b)
+    A[b].append(a)
 
-hq = deque()
-hq.append(1)
+dfs(1)
 
-result = bfs(-1)
+print(cnt)
 
-print(result)
 
-# 출력: 1번 컴퓨터가 바이러스가 걸렸을떄, 1번 컴퓨터를 통해 바이러스에 걸리게 되는 컴퓨터의 수
 
 
