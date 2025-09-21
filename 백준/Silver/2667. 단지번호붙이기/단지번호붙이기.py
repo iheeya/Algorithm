@@ -1,64 +1,37 @@
-from collections import deque
+import sys
+input = sys.stdin.readline
 
-def bfs(a, b, num):
-    global arr
-    if arr[a][b] == 0:
-        return
-    
-    q = deque()
-    q.append([a, b])
+def dfs(x, y):
+    global h_num
+    h_num += 1
+    A[x][y] = 0
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
 
-    if arr[a][b] == 1:
-        arr[a][b] = num
-    dx = [1, -1, 0, 0]
-    dy = [0, 0, 1, -1]
-
-    while q:
-        x, y = q.popleft()
-
-        for i in range(4):
-            nx = dx[i] + x
-            ny = dy[i] + y
-            if 0<=nx<N and 0<=ny<N and arr[nx][ny] == 1:
-                arr[nx][ny] = num
-                q.append([nx, ny])
-    return
+        if 0 <= nx < N and 0 <= ny < N:
+            if A[nx][ny] == 1:
+                dfs(nx, ny)
 
 
-N = int(input())   # 배열 가로 세로 길이
+N = int(input())
+A = [list(map(int, input().strip())) for _ in range(N)]
 
-arr = [list(map(int, input())) for _  in range(N)]
-num = 2
-s = set()
+cnt = 0    # 단지 수를 저장할 변수
+result = []   # 단지내 집의 수를 저장할 변수
 
+dx = [0, 0, -1, 1]
+dy = [-1, 1, 0, 0]
 
 for i in range(N):
     for j in range(N):
-        bfs(i, j, num)
-        num += 1
+        h_num = 0
+        if A[i][j] == 1:
+            cnt += 1
+            dfs(i, j)
+            result.append(h_num)
 
-for i in range(N):
-    for j in range(N):
-        if arr[i][j] != 0:
-            s.add(arr[i][j])
-
-
-lst = list(s)
-result = []   # 단지내 집의 수를 저장할 리스트
-
-for l in lst:
-    cnt = 0
-    for i in range(N):
-        for j in range(N):
-            if arr[i][j] == l:
-                cnt +=1
-    result.append(cnt)
-
+print(cnt)
 result.sort()
-
-
-# 단지 개수 출력
-print(len(s))
-# 단지 내 집의 수를 오름 차순으로 출력
-for _ in result:
-    print(_)
+for i in range(len(result)):
+    print(result[i])
